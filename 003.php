@@ -5,11 +5,13 @@
 
 $texto = "PHP no está muerto… solo sigue trabajando silenciosamente en el 80% de Internet";
 
-echo "=== ANALIZADOR DE TEXTO ===\n\n";
-echo "Texto original:\n\"$texto\"\n\n";
+echo "<strong>=== ANALIZADOR DE TEXTO ===</strong><br><br>";
+echo "<strong>Texto original:</strong><br>";
+echo "\"$texto\"<br><br>";
 
 $textoMinusculas = strtolower($texto);
-echo "Texto en minúsculas:\n\"$textoMinusculas\"\n\n";
+echo "<strong>Texto en minúsculas:</strong><br>";
+echo "\"$textoMinusculas\"<br><br>";
 
 $textoLimpio = preg_replace('/[^a-záéíóúñü\s]/u', '', $textoMinusculas);
 
@@ -21,41 +23,35 @@ $palabrasFiltradas = array_filter($palabras, function($palabra) {
 });
 
 $totalPalabras = count($palabrasFiltradas);
-echo "Total de palabras (≥3 letras): $totalPalabras\n\n";
+echo "<strong>Total de palabras (≥ 3 letras):</strong> $totalPalabras<br><br>";
 
 $frecuencias = array_count_values($palabrasFiltradas);
 arsort($frecuencias);
 
-echo "=== FRECUENCIA DE PALABRAS ===\n";
-echo str_pad("PALABRA", 25) . "APARICIONES\n";
-echo str_repeat("-", 40) . "\n";
-
+echo "<strong>=== FRECUENCIA DE PALABRAS ===</strong><br>";
 foreach ($frecuencias as $palabra => $veces) {
-    echo str_pad($palabra, 25) . $veces . "\n";
+    echo "Palabra: <strong>$palabra</strong> → $veces veces<br>";
 }
 
-echo "\n=== PALABRAS REPETIDAS (>1 vez) ===\n";
+echo "<br><strong>=== PALABRAS REPETIDAS (&gt; 1 vez) ===</strong><br>";
+
 $palabrasRepetidas = array_filter($frecuencias, function($veces) {
     return $veces > 1;
 });
 
 if (count($palabrasRepetidas) > 0) {
-    echo str_pad("PALABRA", 25) . "APARICIONES\n";
-    echo str_repeat("-", 40) . "\n";
-    
     foreach ($palabrasRepetidas as $palabra => $veces) {
-        echo str_pad($palabra, 25) . $veces . "\n";
+        echo "Palabra: <strong>$palabra</strong> → $veces veces<br>";
     }
 } else {
-    echo "No hay palabras que se repitan más de una vez.\n";
+    echo "No hay palabras que se repitan más de una vez.<br>";
 }
 
 $palabraMasRepetida = array_key_first($frecuencias);
 $maxRepeticiones = $frecuencias[$palabraMasRepetida];
 
-echo "\n=== ANÁLISIS FINAL ===\n";
-echo "Palabra más repetida: \"$palabraMasRepetida\"\n";
-echo "Número de repeticiones: $maxRepeticiones\n";
-echo "Palabras únicas: " . count($frecuencias) . "\n";
-echo "Palabras totales analizadas: $totalPalabras\n";
-?>
+echo "<br><strong>=== ANÁLISIS FINAL ===</strong><br>";
+echo "Palabra más repetida: <strong>$palabraMasRepetida</strong><br>";
+echo "Número de repeticiones: $maxRepeticiones<br>";
+echo "Palabras únicas: " . count($frecuencias) . "<br>";
+echo "Palabras totales analizadas: $totalPalabras<br>";
