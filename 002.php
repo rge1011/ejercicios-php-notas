@@ -25,46 +25,35 @@ function calcularDescuento($total) {
     } else {
         $porcentaje = 0;
     }
-    
+
     $monto = $total * ($porcentaje / 100);
-    
-    return [
-        'porcentaje' => $porcentaje,
-        'monto' => $monto
-    ];
+
+    return [$porcentaje, $monto];
 }
 
-echo "=== CARRITO DE COMPRAS ===\n\n";
-echo str_pad("PRODUCTO", 20) . str_pad("PRECIO", 12) . str_pad("CANTIDAD", 12) . 
-     str_pad("SUBTOTAL", 12) . "\n";
-echo str_repeat("=", 56) . "\n";
+echo "<strong>-- CARRITO DE COMPRAS --</strong><br><br>";
 
 foreach ($carrito as $item) {
     $subtotal = $item['precio'] * $item['cantidad'];
-    
-    echo str_pad($item['producto'], 20);
-    echo str_pad(number_format($item['precio'], 2) . " €", 12);
-    echo str_pad($item['cantidad'], 12);
-    echo str_pad(number_format($subtotal, 2) . " €", 12);
-    echo "\n";
+
+    echo "Producto: {$item['producto']}<br>";
+    echo "Precio: " . number_format($item['precio'], 2) . " €<br>";
+    echo "Cantidad: {$item['cantidad']}<br>";
+    echo "Subtotal: " . number_format($subtotal, 2) . " €<br>";
+    echo "--------------------------<br>";
 }
 
-echo str_repeat("-", 56) . "\n";
+$total = calcularTotal($carrito);
+list($porcentaje, $monto) = calcularDescuento($total);
+$totalFinal = $total - $monto;
 
-$totalSinDescuento = calcularTotal($carrito);
-$descuento = calcularDescuento($totalSinDescuento);
-$totalFinal = $totalSinDescuento - $descuento['monto'];
+echo "<br><strong>--- RESUMEN DE COMPRA ---</strong><br>";
+echo "Total sin descuento: " . number_format($total, 2) . " €<br>";
 
-echo "\n=== RESUMEN DE COMPRA ===\n";
-echo "Subtotal: " . number_format($totalSinDescuento, 2) . " €\n";
-
-if ($descuento['porcentaje'] > 0) {
-    echo "Descuento aplicado: " . $descuento['porcentaje'] . "% (-" . 
-         number_format($descuento['monto'], 2) . " €)\n";
+if ($porcentaje > 0) {
+    echo "Descuento aplicado: {$porcentaje}% (-" . number_format($monto, 2) . " €)<br>";
 } else {
-    echo "Sin descuento aplicado\n";
+    echo "Sin descuento aplicado<br>";
 }
 
-echo str_repeat("=", 40) . "\n";
-echo "TOTAL FINAL: " . number_format($totalFinal, 2) . " €\n";
-?>
+echo "<strong>TOTAL FINAL: " . number_format($totalFinal, 2) . " €</strong><br>";
