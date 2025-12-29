@@ -21,34 +21,33 @@ $suspendidos = 0;
 $mejorEstudiante = "";
 $mejorPromedio = 0;
 
-echo "=== GESTOR DE NOTAS DE ESTUDIANTES ===\n\n";
+echo "<strong>-- GESTOR DE NOTAS DE ESTUDIANTES --</strong><br><br>";
 
 foreach ($estudiantes as $nombre => $notas) {
     $promedio = calcularPromedio($notas);
     $estado = $promedio >= 6 ? "Aprobado" : "Suspenso";
-    
-    echo "Estudiante: $nombre\n";
-    echo "Notas: " . implode(", ", $notas) . "\n";
-    echo "Promedio: " . number_format($promedio, 2) . "\n";
-    echo "Estado: $estado\n";
-    echo str_repeat("-", 40) . "\n";
-    
+
+    echo "Estudiante: $nombre<br>";
+    echo "Notas: " . implode(", ", $notas) . "<br>";
+    echo "Promedio: " . number_format($promedio, 2) . "<br>";
+    echo "Estado: $estado<br>";
+    echo "----------------------------------------<br>";
+
     if ($promedio >= 6) {
         $aprobados++;
     } else {
         $suspendidos++;
     }
-    
+
     if ($promedio > $mejorPromedio) {
         $mejorPromedio = $promedio;
         $mejorEstudiante = $nombre;
     }
 }
 
-echo "\n=== RESUMEN FINAL ===\n";
-echo "Total de estudiantes: " . count($estudiantes) . "\n";
-echo "Aprobados: $aprobados\n";
-echo "Suspendidos: $suspendidos\n";
-echo "\nMejor estudiante: $mejorEstudiante con promedio de " . 
-     number_format($mejorPromedio, 2) . "\n";
-?>
+echo "<br><strong>--- RESUMEN FINAL ---</strong><br>";
+echo "Total de estudiantes: " . count($estudiantes) . "<br>";
+echo "Aprobados: $aprobados<br>";
+echo "Suspendidos: $suspendidos<br>";
+echo "<br>Mejor estudiante: $mejorEstudiante con promedio de " .
+     number_format($mejorPromedio, 2) . "<br>";
